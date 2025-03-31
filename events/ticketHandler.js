@@ -144,12 +144,6 @@ async function handleSelectMenu(interaction, client) {
 
     try {
         const ticketExists = await ticketsCollection.findOne({ guildId, userId });
-        if (ticketExists) {
-            return interaction.followUp({
-                content: 'You already have an open ticket.',
-                flags: 64
-            });
-        }
     } catch (error) {
         console.error("Error checking for existing ticket:", error);
     }
