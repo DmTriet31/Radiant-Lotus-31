@@ -125,7 +125,7 @@ module.exports = {
                 pages.push({
                     title: 'Bot Information',
                     description: [
-                        `- **Developer:** GlaceYT`,
+                        `- **Developer:** Minh Triet`,
                         `- **Version:** 1.2.1`,
                         `- **Commands Loaded:** ${totalCommandsLoaded}`,
                         `- **Master Commands:** ${masterCount}`,
@@ -134,7 +134,7 @@ module.exports = {
                         `- **Categories Enabled:** ${getEnabledCategories(config.categories).join(', ')}`,
                         `- **Prefix Commands:** ${Object.values(config.excessCommands).some(v => v) ? 'Enabled' : 'Disabled'}`
                     ].join('\n'),
-                    author: { name: 'All In One Bot' }
+                    author: { name: 'Radiant Lotus' }
                 });
 
                 // Command Pages for each category
