@@ -1,7 +1,7 @@
 {
     "token": "",
     "language": "en",
-    "prefix": "!",
+    "prefix": "rl",
     "mongodbUri": "",
     "excessCommands": {
         "utility": true,
