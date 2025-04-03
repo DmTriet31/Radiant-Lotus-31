@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('disc
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('say')
+        .setName('thongbao')
         .setDescription('Gửi tin nhắn có embed đến kênh được chọn.')
         .addChannelOption(option => 
             option.setName('channel')
