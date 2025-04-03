@@ -35,7 +35,7 @@ module.exports = {
         if (interaction.isCommand && interaction.isCommand()) {
         
             const BOT_ICON = "https://cdn.discordapp.com/attachments/1316896145393586227/1357331068688011365/standard_1.gif?ex=67efd090&is=67ee7f10&hm=4250dfedab995219647a7ff3509637d1ed2c9b841abf21b54cf2d87544c2c901&";
-            const EMBED_COLOR = "#3498db";
+            const EMBED_COLOR = "#FF69B4";
             const COMMANDS_DIR = path.join(__dirname, '../../commands');
             const EXCESS_COMMANDS_DIR = path.join(__dirname, '../../excesscommands');
 
@@ -193,7 +193,7 @@ module.exports = {
                     .setAuthor({
                         name: page.author.name,
                         iconURL: BOT_ICON,
-                        url: "https://discord.gg/xQF9f9yUEM"
+                        url: "https://discord.gg/rWKgxnQmHU"
                     })
                     .setTimestamp();
 
