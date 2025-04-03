@@ -5,17 +5,17 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('say')
     .setDescription('Gửi một thông điệp dưới dạng Embed.')
-    .addStringOption(option => 
+    .addStringOption(option =>
       option.setName('title')
         .setDescription('Tiêu đề của Embed')
         .setRequired(true))
-    .addStringOption(option => 
+    .addStringOption(option =>
       option.setName('description')
         .setDescription('Mô tả của Embed')
         .setRequired(true)),
 
   async execute(interaction) {
-    // Lấy giá trị tiêu đề và mô tả từ các tham số người dùng nhập vào
+    // Lấy tiêu đề và mô tả từ người dùng nhập
     const title = interaction.options.getString('title');
     const description = interaction.options.getString('description');
 
@@ -23,10 +23,11 @@ module.exports = {
     const embed = new MessageEmbed()
       .setTitle(title)
       .setDescription(description)
-      .setColor('#00FF00')  // Bạn có thể thay đổi màu sắc ở đây
+      .setColor('#3498db') // Màu xanh dương
+      .setFooter({ text: `Được gửi bởi ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
       .setTimestamp();
 
-    // Gửi Embed vào kênh nơi lệnh được gọi
+    // Gửi tin nhắn Embed vào kênh hiện tại
     await interaction.reply({ embeds: [embed] });
   },
 };
