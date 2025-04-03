@@ -1,6 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
-// Mảng các trò chơi
+// Danh sách các trò chơi
 const games = [
     "Valorant 🎮",
     "Minecraft ⛏️",
@@ -14,7 +14,16 @@ module.exports = {
         .setName('randomgame')
         .setDescription('Random game cho bạn chơi!'),
     async execute(interaction) {
+        // Random game từ danh sách
         const randomGame = games[Math.floor(Math.random() * games.length)];
-        await interaction.reply(`Hôm nay, bạn có thể thử chơi: **${randomGame}**`);
+
+        // Tạo embed
+        const embed = new EmbedBuilder()
+            .setColor('#0099ff')
+            .setTitle('Random Game')
+            .setDescription(`Hôm nay, bạn có thể thử chơi: **${randomGame}**`)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [embed] });
     },
 };
