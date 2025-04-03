@@ -28,7 +28,7 @@ module.exports = {
         const randomFood = foods[Math.floor(Math.random() * foods.length)];
         const randomDrink = drinks[Math.floor(Math.random() * drinks.length)];
 
-        // Gửi thông báo cho người dùng
-        await interaction.reply(`Hôm nay bạn có thể thử món ăn: **${randomFood}** và uống: **${randomDrink}**.`);
+        // Gửi thông báo với emoji
+        await interaction.reply(`🍽️ Hôm nay bạn có thể thử món ăn: **${randomFood}** và uống: **${randomDrink}** 🥤.`);
     },
 };
