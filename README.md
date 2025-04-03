@@ -1,4 +1,4 @@
-![Animated Background](https://i.imgur.com/ECZKmlO.gif)
+![Animated Background](https://cdn.discordapp.com/attachments/1316896145393586227/1357330377693331566/standard.gif?ex=67efcfec&is=67ee7e6c&hm=fb05e526452ed3144bf0f1f48ef58240ca81f680b48bdf9528babbe2345ac4a2&)
 
 <h1 align="center" style="font-family: Arial, sans-serif; color: #FF6F61; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
   ALL IN ONE BOT 1.2.1
