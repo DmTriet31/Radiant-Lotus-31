@@ -1,3 +1,65 @@
+const { Client, Intents, MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const { clientId, token, guildId } = require('./config.json'); // Cập nhật theo cấu hình của bạn
+
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
+// Đăng ký lệnh Slash
+const commands = [
+  new SlashCommandBuilder()
+    .setName('say')
+    .setDescription('Gửi một thông điệp dưới dạng Embed.')
+    .addStringOption(option => 
+      option.setName('title')
+        .setDescription('Tiêu đề của Embed')
+        .setRequired(true))
+    .addStringOption(option => 
+      option.setName('description')
+        .setDescription('Mô tả của Embed')
+        .setRequired(true)),
+].map(command => command.toJSON());
+
+const rest = new REST({ version: '9' }).setToken(token);
+
+client.once('ready', async () => {
+  try {
+    console.log('Đang đăng ký lệnh Slash...');
+    
+    // Đăng ký lệnh Slash với server
+    await rest.put(
+      Routes.applicationGuildCommands(clientId, guildId),
+      { body: commands },
+    );
+
+    console.log('Lệnh Slash đã được đăng ký thành công!');
+  } catch (error) {
+    console.error('Lỗi đăng ký lệnh Slash:', error);
+  }
+});
+
+// Xử lý lệnh /say
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isCommand()) return;
+
+  if (interaction.commandName === 'say') {
+    const title = interaction.options.getString('title');
+    const description = interaction.options.getString('description');
+
+    const embed = new MessageEmbed()
+      .setTitle(title)
+      .setDescription(description)
+      .setColor('#00FF00')  // Bạn có thể thay đổi màu sắc ở đây
+      .setTimestamp();
+
+    await interaction.reply({ embeds: [embed] });
+  }
+});
+
+// Đăng nhập bot
+client.login(token);
+
 const client = require('./main');
 require('./bot');
 require('./shiva');
