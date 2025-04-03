@@ -19,5 +19,3 @@ client.on('messageCreate', async (message) => {
     message.channel.send({ embeds: [embed] });
   }
 });
-
-client.login('YOUR_BOT_TOKEN');
