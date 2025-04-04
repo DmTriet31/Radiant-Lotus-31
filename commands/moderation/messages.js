@@ -24,7 +24,7 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, PermissionsBitFi
 const cmdIcons = require('../../UI/icons/commandicons');
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('clear')s
+        .setName('messages')s
         .setDescription('Delete specific types of messages from the channel.')
         .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
         .addSubcommand(subcommand =>
