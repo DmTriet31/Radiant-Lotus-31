@@ -20,7 +20,7 @@ module.exports = {
 
         // Tạo một Embed với tiêu đề và mô tả
         const embed = new EmbedBuilder()
-            .setColor(0x2f3136)  // Màu của Embed
+            .setColor(#6A0DAD)  // Màu của Embed
             .setTitle(title) // Tiêu đề sẽ in đậm và to
             .setDescription(description) // Mô tả sẽ bình thường
             .setFooter({ text: `Gửi bởi ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
