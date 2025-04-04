@@ -14,11 +14,11 @@ module.exports = {
     const title = interaction.options.getString('title');
 
     const embed = new EmbedBuilder()
-      .setColor('#6A0DAD') // Tím đậm
+      .setColor(0x6A0DAD) // ✅ Màu tím đậm (viết đúng kiểu hex int)
       .setTitle(title)
       .setFooter({ 
         text: `Gửi bởi ${interaction.user.username}`, 
-        iconURL: interaction.user.displayAvatarURL() 
+        iconURL: interaction.user.displayAvatarURL({ dynamic: true })
       })
       .setTimestamp();
 
