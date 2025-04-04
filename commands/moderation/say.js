@@ -3,24 +3,24 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('say')
-        .setDescription('Gửi một tin nhắn embed có tiêu đề to và nội dung phụ')
-        .addStringOption(option => 
+        .setDescription('Gửi một embed với tiêu đề và nội dung tùy chỉnh')
+        .addStringOption(option =>
             option.setName('title')
-                .setDescription('Tiêu đề chính (sẽ hiển thị to hơn)')
+                .setDescription('Tiêu đề chính (chữ to)')
                 .setRequired(true))
-        .addStringOption(option => 
-            option.setName('message')
+        .addStringOption(option =>
+            option.setName('des')
                 .setDescription('Nội dung mô tả')
-                .setRequired(false)),
+                .setRequired(true)),
 
     async execute(interaction) {
-        const title = interaction.options.getString('title');
-        const message = interaction.options.getString('message') || ''; // Nếu không nhập, sẽ để trống
+        const title = interaction.options.getString('title'); // Lấy tiêu đề
+        const description = interaction.options.getString('des'); // Lấy nội dung mô tả
 
         const embed = new EmbedBuilder()
-            .setColor(0x00AE86)
-            .setTitle(title) // Chữ này sẽ TO hơn
-            .setDescription(message) // Chữ này sẽ bình thường
+            .setColor(0x2f3136) // Màu embed (có thể thay đổi)
+            .setTitle(title) // Tiêu đề lớn
+            .setDescription(description) // Nội dung mô tả
             .setFooter({ text: `Gửi bởi ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
 
