@@ -1,5 +1,5 @@
 // commands/fun/randommusic.js
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 const songs = [
   "Sơn Tùng M-TP - Hãy Trao Cho Anh",
@@ -51,6 +51,18 @@ module.exports = {
   async execute(interaction) {
     const randomSong = songs[Math.floor(Math.random() * songs.length)];
     const randomAdvice = advices[Math.floor(Math.random() * advices.length)];
-    await interaction.reply(`🎧 Bài hát bạn nên nghe: **${randomSong}**\n💡 ${randomAdvice}`);
+
+    const embed = new EmbedBuilder()
+      .setColor('#e91e63')
+      .setTitle('🎶 Gợi Ý Nhạc Việt')
+      .setDescription(`**Bài hát bạn nên nghe:**\n${randomSong}`)
+      .addFields(
+        { name: '💡 Lời khuyên', value: randomAdvice }
+      )
+      .setThumbnail('https://cdn-icons-png.flaticon.com/512/727/727245.png') // Có thể thay đổi thành hình ảnh bạn thích
+      .setTimestamp()
+      .setFooter({ text: 'Music Bot • Việt Nam Vibes', iconURL: 'https://cdn-icons-png.flaticon.com/512/727/727245.png' });
+
+    await interaction.reply({ embeds: [embed] });
   },
 };
