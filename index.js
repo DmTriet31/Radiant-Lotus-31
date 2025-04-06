@@ -144,7 +144,7 @@ client.on('interactionCreate', async interaction => {
       await interaction.reply({ content: `✅ Đã đưa bạn vào voice **${voiceChannel.name}**!`, ephemeral: true });
     } catch (err) {
       console.error(err);
-      await interaction.reply({ content: '❌ Không thể đưa bạn vào voice. Có thể bot thiếu quyền.', ephemeral: true });
+      await interaction.reply({ content: '❌ Không thể đưa bạn vào voice. Có thể bot thiếu quyền hoặc bạn k có ở trong voicechat.', ephemeral: true });
     }
   }
 });
