@@ -20,11 +20,13 @@ module.exports = {
       option.setName('rank')
         .setDescription('Chọn rank')
         .setRequired(true)
-        .addChoices(...rankChoices.map(rank => ({ name: rank, value: rank }))))
+        .addChoices(...rankChoices.map(rank => ({ name: rank, value: rank })))
+    )
     .addStringOption(option =>
       option.setName('msg')
         .setDescription('Nội dung tin nhắn')
-        .setRequired(true)),
+        .setRequired(true)
+    ),
 
   async execute(interaction) {
     const msg = interaction.options.getString('msg');
@@ -36,15 +38,15 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setColor(0xAA00FF)
       .setAuthor({
-        name: ${interaction.user.username},
+        name: `${interaction.user.username}`, 
         iconURL: interaction.user.displayAvatarURL()
       })
       .addFields(
         { name: 'Room', value: roomName, inline: true },
-        { name: 'Slot', value: '+3/Unlimited', inline: true },
+        { name: 'Slot', value: '2/Unlimited', inline: true },
         { name: 'Rank', value: rank.toUpperCase(), inline: true }
       )
-      .setFooter({ text: 'Cách sử dụng: /val msg: [msg] rank: [rank]' });
+      .setFooter({ text: 'Cách sử dụng: /val rank: [rank] msg: [msg]' });
 
     const joinButton = new ButtonBuilder()
       .setCustomId(JSON.stringify({ cmd: 'join_voice', vc: voiceChannel?.id || null }))
@@ -55,7 +57,7 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(joinButton);
 
     await interaction.reply({
-      content: ${interaction.user},
+      content: `${interaction.user} ${msg}`,
       embeds: [embed],
       components: [row]
     });
