@@ -1,3 +1,17 @@
+const {
+  SlashCommandBuilder,
+  EmbedBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ActionRowBuilder
+} = require('discord.js');
+
+const rankChoices = [
+  'Radiant', 'Immortal', 'Ascendant', 'Diamond',
+  'Platinum', 'Gold', 'Silver', 'Bronze',
+  'Iron', 'Unrated', 'Spikerush'
+];
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('val')
@@ -19,17 +33,25 @@ module.exports = {
     const voiceChannel = member.voice?.channel;
     const roomName = voiceChannel ? voiceChannel.name : '❌ Không ở trong voice channel';
 
-    // Tìm số lượng người chơi (bao gồm cả giá trị +X)
-    const playerCountMatch = msg.match(/([+-]?\d+)/);
-    const playerCount = playerCountMatch ? parseInt(playerCountMatch[1]) : 2;  // Mặc định là 2 nếu không có số lượng người chơi
+    // Xử lý msg để tìm giá trị số lượng người chơi
+    const slotMatch = msg.match(/([+-]?\d+)(?:-([+-]?\d+))?/); // Phù hợp với +X, X, hoặc +X-Y
+    let slotValue = '2/Unlimited'; // Mặc định là 2/Unlimited
 
-    // Cập nhật Slot tùy theo số lượng người chơi
-    const slotValue = `${playerCount}/Unlimited`;
+    if (slotMatch) {
+      const start = slotMatch[1]; // Số bắt đầu (ví dụ: +1)
+      const end = slotMatch[2];   // Số kết thúc (nếu có, ví dụ: -5)
+      
+      if (end) {
+        slotValue = `${start}-${end}/Unlimited`;
+      } else {
+        slotValue = `${start}/Unlimited`;
+      }
+    }
 
     const embed = new EmbedBuilder()
       .setColor(0xAA00FF)
       .setAuthor({
-        name: `${interaction.user.username}`,  // Chỉ hiển thị tên người dùng mà không có thêm message
+        name: `${interaction.user.username}`,
         iconURL: interaction.user.displayAvatarURL()
       })
       .addFields(
