@@ -115,6 +115,40 @@ const loadEventHandlers = () => {
  
     console.log(`${colors.green}${colors.bright}Status: ${colors.reset}${colors.green}All systems operational${colors.reset}`);
     console.log(`${colors.gray}Last checked: ${colors.reset}${colors.cyan}${new Date().toLocaleTimeString()}${colors.reset}\n`);
+
+client.on('interactionCreate', async interaction => {
+  if (!interaction.isButton()) return;
+
+  let data;
+  try {
+    data = JSON.parse(interaction.customId);
+  } catch (err) {
+    return;
+  }
+
+  if (data.cmd === 'join_voice') {
+    const member = interaction.member;
+    const vcId = data.vc;
+
+    if (!vcId) {
+      return interaction.reply({ content: '❌ Không tìm thấy voice channel.', ephemeral: true });
+    }
+
+    const voiceChannel = interaction.guild.channels.cache.get(vcId);
+    if (!voiceChannel || voiceChannel.type !== 2) {
+      return interaction.reply({ content: '❌ Voice channel không hợp lệ.', ephemeral: true });
+    }
+
+    try {
+      await member.voice.setChannel(voiceChannel);
+      await interaction.reply({ content: `✅ Đã đưa bạn vào voice **${voiceChannel.name}**!`, ephemeral: true });
+    } catch (err) {
+      console.error(err);
+      await interaction.reply({ content: '❌ Không thể đưa bạn vào voice. Có thể bot thiếu quyền.', ephemeral: true });
+    }
+  }
+});
+
 };
 
 loadEventHandlers();
