@@ -12,7 +12,7 @@ const foods = [
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('randomfood')
+        .setName('angi')
         .setDescription('Random một món ăn cho bạn!'),
     async execute(interaction) {
         const randomFood = foods[Math.floor(Math.random() * foods.length)];
