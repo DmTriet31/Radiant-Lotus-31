@@ -21,7 +21,7 @@ const drinks = [
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('randomfood')
+        .setName('angi')
         .setDescription('Bot sẽ random món ăn và nước uống cho bạn!'),
     async execute(interaction) {
         // Random món ăn và nước uống
