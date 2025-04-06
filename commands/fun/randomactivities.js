@@ -12,7 +12,7 @@ const activities = [
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('randomActivity')
+        .setName('randomactivity')
         .setDescription('Random một hoạt động cho bạn!'),
     async execute(interaction) {
         // Random hoạt động
