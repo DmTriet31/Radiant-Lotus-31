@@ -41,7 +41,7 @@ module.exports = {
       })
       .addFields(
         { name: 'Room', value: roomName, inline: true },
-        { name: 'Slot', value: '${msg}/Unlimited', inline: true },
+        { name: 'Slot', value: '+3/Unlimited', inline: true },
         { name: 'Rank', value: rank.toUpperCase(), inline: true }
       )
       .setFooter({ text: 'Cách sử dụng: /val msg: [msg] rank: [rank]' });
