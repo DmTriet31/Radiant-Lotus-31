@@ -55,7 +55,7 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(joinButton);
 
     await interaction.reply({
-      content: `@${interaction.user} ${msg}`,
+      content: `${interaction.user} ${msg}`,
       embeds: [embed],
       components: [row]
     });
