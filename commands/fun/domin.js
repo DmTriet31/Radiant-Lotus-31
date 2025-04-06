@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('domin')
-        .setDescription('Chơi game mở hộp quà với cơ hội nhận YuriCoin'),
+        .setDescription('Chơi game mở hộp quà với cơ hội nhận Radiant Coins),
     
         async execute(interaction) {
             
