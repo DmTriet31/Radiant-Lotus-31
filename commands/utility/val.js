@@ -20,7 +20,7 @@ module.exports = {
       option.setName('rank')
         .setDescription('Chọn rank')
         .setRequired(true)
-        .addChoices(...rankChoices.map(rank => ({ name: rank, value: rank })))),
+        .addChoices(...rankChoices.map(rank => ({ name: rank, value: rank }))))
     .addStringOption(option =>
       option.setName('msg')
         .setDescription('Nội dung tin nhắn')
@@ -33,33 +33,18 @@ module.exports = {
     const voiceChannel = member.voice?.channel;
     const roomName = voiceChannel ? voiceChannel.name : '❌ Không ở trong voice channel';
 
-    // Xử lý msg để tìm giá trị số lượng người chơi
-    const slotMatch = msg.match(/([+-]?\d+)(?:-([+-]?\d+))?/); // Phù hợp với +X, X, hoặc +X-Y
-    let slotValue = '2/Unlimited'; // Mặc định là 2/Unlimited
-
-    if (slotMatch) {
-      const start = slotMatch[1]; // Số bắt đầu (ví dụ: +1)
-      const end = slotMatch[2];   // Số kết thúc (nếu có, ví dụ: -5)
-      
-      if (end) {
-        slotValue = `${start}-${end}/Unlimited`;
-      } else {
-        slotValue = `${start}/Unlimited`;
-      }
-    }
-
     const embed = new EmbedBuilder()
       .setColor(0xAA00FF)
       .setAuthor({
-        name: `${interaction.user.username}`,
+        name: ${interaction.user.username},
         iconURL: interaction.user.displayAvatarURL()
       })
       .addFields(
         { name: 'Room', value: roomName, inline: true },
-        { name: 'Slot', value: slotValue, inline: true },
+        { name: 'Slot', value: '${msg}/Unlimited', inline: true },
         { name: 'Rank', value: rank.toUpperCase(), inline: true }
       )
-      .setFooter({ text: 'Cách sử dụng: /val rank: [rank] msg: [msg]' });
+      .setFooter({ text: 'Cách sử dụng: /val msg: [msg] rank: [rank]' });
 
     const joinButton = new ButtonBuilder()
       .setCustomId(JSON.stringify({ cmd: 'join_voice', vc: voiceChannel?.id || null }))
@@ -70,7 +55,7 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(joinButton);
 
     await interaction.reply({
-      content: `${interaction.user}`,
+      content: ${interaction.user},
       embeds: [embed],
       components: [row]
     });
