@@ -44,7 +44,7 @@ module.exports = {
         { name: 'Slot', value: '2/Unlimited', inline: true },
         { name: 'Rank', value: rank.toUpperCase(), inline: true }
       )
-      .setFooter({ text: 'Cách sử dụng: /cyp rank: [rank] msg: [msg]' });
+      .setFooter({ text: 'Cách sử dụng: /val rank: [rank] msg: [msg]' });
 
     const joinButton = new ButtonBuilder()
       .setCustomId(JSON.stringify({ cmd: 'join_voice', vc: voiceChannel?.id || null }))
