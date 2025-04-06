@@ -14,7 +14,7 @@ const rankChoices = [
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('cyp')
+    .setName('val')
     .setDescription('Tạo tin tuyển người chơi với rank cụ thể')
     .addStringOption(option =>
       option.setName('rank')
