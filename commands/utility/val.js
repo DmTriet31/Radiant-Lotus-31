@@ -1,17 +1,3 @@
-const {
-  SlashCommandBuilder,
-  EmbedBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  ActionRowBuilder
-} = require('discord.js');
-
-const rankChoices = [
-  'Radiant', 'Immortal', 'Ascendant', 'Diamond',
-  'Platinum', 'Gold', 'Silver', 'Bronze',
-  'Iron', 'Unrated', 'Spikerush'
-];
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('val')
@@ -20,7 +6,7 @@ module.exports = {
       option.setName('rank')
         .setDescription('Chọn rank')
         .setRequired(true)
-        .addChoices(...rankChoices.map(rank => ({ name: rank, value: rank }))))
+        .addChoices(...rankChoices.map(rank => ({ name: rank, value: rank })))),
     .addStringOption(option =>
       option.setName('msg')
         .setDescription('Nội dung tin nhắn')
@@ -33,15 +19,22 @@ module.exports = {
     const voiceChannel = member.voice?.channel;
     const roomName = voiceChannel ? voiceChannel.name : '❌ Không ở trong voice channel';
 
+    // Tìm số lượng người chơi (bao gồm cả giá trị +X)
+    const playerCountMatch = msg.match(/([+-]?\d+)/);
+    const playerCount = playerCountMatch ? parseInt(playerCountMatch[1]) : 2;  // Mặc định là 2 nếu không có số lượng người chơi
+
+    // Cập nhật Slot tùy theo số lượng người chơi
+    const slotValue = `${playerCount}/Unlimited`;
+
     const embed = new EmbedBuilder()
       .setColor(0xAA00FF)
       .setAuthor({
-        name: `${interaction.user.username} ${msg}`,
+        name: `${interaction.user.username}`,  // Chỉ hiển thị tên người dùng mà không có thêm message
         iconURL: interaction.user.displayAvatarURL()
       })
       .addFields(
         { name: 'Room', value: roomName, inline: true },
-        { name: 'Slot', value: '2/Unlimited', inline: true },
+        { name: 'Slot', value: slotValue, inline: true },
         { name: 'Rank', value: rank.toUpperCase(), inline: true }
       )
       .setFooter({ text: 'Cách sử dụng: /val rank: [rank] msg: [msg]' });
