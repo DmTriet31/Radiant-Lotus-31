@@ -28,6 +28,104 @@ module.exports = {
         const guildId = message.guild.id;
         const channelId = message.channel.id;
         const content = message.content.toLowerCase().trim(); 
+const axios = require('axios');
+const ytdl = require('@distube/ytdl-core');
+const fsPromises = require('fs').promises;
+const moment = require('moment-timezone');
+const tempFolder = path.join(__dirname, '..', 'temp');
+
+const regEx_tiktok = /(?:https?:\/\/)?(?:www\.)?(?:vm\.tiktok\.com|tiktok\.com\/@[\w.-]+\/video\/\d+|tiktok\.com\/t\/[\w.-]+)/i;
+const regEx_youtube = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/i;
+const regEx_twitter = /(?:https?:\/\/)?(?:www\.)?(?:x|twitter)\.com\/[^\s]+/i;
+
+(async () => {
+    if (regEx_tiktok.test(message.content)) {
+        try {
+            const encodedURL = encodeURIComponent(message.content.trim());
+            const response = await axios.get(`https://api.tiklydown.me/api/download?url=${encodedURL}`);
+            const videoData = response.data.data[0];
+            const videoUrl = videoData.play;
+            const filename = `tiktok_${Date.now()}.mp4`;
+            const filePath = path.join(tempFolder, filename);
+
+            const videoStream = await axios.get(videoUrl, { responseType: 'stream' });
+            const writer = fs.createWriteStream(filePath);
+            videoStream.data.pipe(writer);
+
+            writer.on('finish', async () => {
+                await message.channel.send({ files: [filePath] });
+                await fsPromises.unlink(filePath);
+            });
+
+            writer.on('error', (err) => {
+                console.error('Video download error:', err);
+                message.channel.send('❌ Failed to download the video.');
+            });
+
+        } catch (err) {
+            console.error('TikTok download error:', err);
+            message.channel.send('❌ Failed to fetch TikTok video.');
+        }
+    } else if (regEx_youtube.test(message.content)) {
+        try {
+            const match = message.content.match(regEx_youtube);
+            const videoId = match[1];
+            const url = `https://www.youtube.com/watch?v=${videoId}`;
+
+            const info = await ytdl.getInfo(url);
+            const format = ytdl.chooseFormat(info.formats, { quality: 'lowest', filter: 'audioandvideo' });
+
+            const filename = `yt_${Date.now()}.mp4`;
+            const filePath = path.join(tempFolder, filename);
+            const videoStream = ytdl.downloadFromInfo(info, { format });
+
+            const writer = fs.createWriteStream(filePath);
+            videoStream.pipe(writer);
+
+            writer.on('finish', async () => {
+                await message.channel.send({ files: [filePath] });
+                await fsPromises.unlink(filePath);
+            });
+
+            writer.on('error', (err) => {
+                console.error('YouTube download error:', err);
+                message.channel.send('❌ Failed to download YouTube video.');
+            });
+
+        } catch (err) {
+            console.error('YouTube fetch error:', err);
+            message.channel.send('❌ Failed to fetch YouTube video.');
+        }
+    } else if (regEx_twitter.test(message.content)) {
+        try {
+            const encodedURL = encodeURIComponent(message.content.trim());
+            const response = await axios.get(`https://api.kychua.asia/twitter?url=${encodedURL}`);
+            const mediaUrl = response.data.data[0]?.url;
+            const fileExt = path.extname(mediaUrl).split('?')[0];
+            const filename = `x_${Date.now()}${fileExt}`;
+            const filePath = path.join(tempFolder, filename);
+
+            const videoStream = await axios.get(mediaUrl, { responseType: 'stream' });
+            const writer = fs.createWriteStream(filePath);
+            videoStream.data.pipe(writer);
+
+            writer.on('finish', async () => {
+                await message.channel.send({ files: [filePath] });
+                await fsPromises.unlink(filePath);
+            });
+
+            writer.on('error', (err) => {
+                console.error('X (Twitter) download error:', err);
+                message.channel.send('❌ Failed to download video from X.');
+            });
+
+        } catch (err) {
+            console.error('Twitter fetch error:', err);
+            message.channel.send('❌ Failed to fetch video from X.');
+        }
+    }
+})();
+
 
         const countingData = await countingCollection.findOne({ guildId });
 
