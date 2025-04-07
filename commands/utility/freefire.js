@@ -33,7 +33,16 @@ module.exports = {
     const rank = interaction.options.getString('rank');
     const member = interaction.member;
     const voiceChannel = member.voice?.channel;
-    const roomName = voiceChannel ? voiceChannel.name : '❌ Không ở trong voice channel';
+
+    let roomName = '❌ Không ở trong voice channel';
+    let slot = '0/0';
+
+    if (voiceChannel) {
+      const memberCount = voiceChannel.members.size;
+      const userLimit = voiceChannel.userLimit;
+      slot = `${memberCount}/${userLimit === 0 ? 'Không giới hạn' : userLimit}`;
+      roomName = voiceChannel.name;
+    }
 
     const embed = new EmbedBuilder()
       .setColor(0xFF4500)
@@ -43,7 +52,7 @@ module.exports = {
       })
       .addFields(
         { name: 'Phòng', value: roomName, inline: true },
-        { name: 'Slot', value: '2/Không giới hạn', inline: true },
+        { name: 'Slot', value: slot, inline: true },
         { name: 'Rank', value: rank.toUpperCase(), inline: true }
       )
       .setFooter({ text: 'Cách sử dụng: /freefire rank: [rank] msg: [msg]' });
