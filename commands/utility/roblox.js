@@ -32,7 +32,17 @@ module.exports = {
     const rank = interaction.options.getString('rank');
     const member = interaction.member;
     const voiceChannel = member.voice?.channel;
-    const roomName = voiceChannel ? voiceChannel.name : '❌ Không ở trong voice channel';
+
+    // Xử lý slot và tên phòng
+    let roomName = '❌ Không ở trong voice channel';
+    let slot = '0/0';
+
+    if (voiceChannel) {
+      const memberCount = voiceChannel.members.size;
+      const userLimit = voiceChannel.userLimit;
+      slot = `${memberCount}/${userLimit === 0 ? 'Không giới hạn' : userLimit}`;
+      roomName = voiceChannel.name;
+    }
 
     const embed = new EmbedBuilder()
       .setColor(0xFFD700)
@@ -42,7 +52,7 @@ module.exports = {
       })
       .addFields(
         { name: 'Phòng voice', value: roomName, inline: true },
-        { name: 'Slot', value: '2/Không giới hạn', inline: true },
+        { name: 'Slot', value: slot, inline: true },
         { name: 'Kiểu chơi', value: rank, inline: true }
       )
       .setFooter({ text: 'Sử dụng: /roblox rank: [kiểu chơi] msg: [nội dung tuyển]' });
