@@ -24,28 +24,44 @@ module.exports = {
       option.setName('character')
         .setDescription('Tên nhân vật trong Albion Online')
         .setRequired(true)
+    )
+    .addStringOption(option =>
+      option.setName('msg')
+        .setDescription('Nội dung tin nhắn tìm đồng đội')
+        .setRequired(true)
     ),
-  
+
   async execute(interaction) {
     const activity = interaction.options.getString('activity');
     const character = interaction.options.getString('character');
+    const msg = interaction.options.getString('msg');
     const member = interaction.member;
     const voiceChannel = member.voice?.channel;
-    const roomName = voiceChannel ? voiceChannel.name : '❌ Không ở trong voice channel';
 
-    // Tạo thông tin cuộc mời
+    let roomName = '❌ Không ở trong voice channel';
+    let slot = '0/0';
+
+    if (voiceChannel) {
+      const memberCount = voiceChannel.members.size;
+      const userLimit = voiceChannel.userLimit;
+      slot = `${memberCount}/${userLimit === 0 ? 'Không giới hạn' : userLimit}`;
+      roomName = voiceChannel.name;
+    }
+
     const embed = new EmbedBuilder()
       .setColor(0x00FF00)
-      .setAuthor({ name: `${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
+      .setAuthor({
+        name: `${interaction.user.username}`,
+        iconURL: interaction.user.displayAvatarURL()
+      })
       .setTitle(`⚔️ **Tìm Đồng Đội trong Albion Online**`)
-      .setDescription(`**Nhân vật**: ${character}\n**Hoạt động**: ${activity}`)
+      .setDescription(`**Nhân vật**: ${character}\n**Hoạt động**: ${activity}\n**Thông điệp**: ${msg}`)
       .addFields(
         { name: 'Phòng voice', value: roomName, inline: true },
-        { name: 'Số người tham gia', value: '1/Không giới hạn', inline: true }
+        { name: 'Slot', value: slot, inline: true }
       )
-      .setFooter({ text: 'Sử dụng: /albion activity: [hoạt động] character: [tên nhân vật]' });
+      .setFooter({ text: 'Sử dụng: /albion activity: [hoạt động] character: [tên nhân vật] msg: [nội dung]' });
 
-    // Nút tham gia voice channel
     const joinButton = new ButtonBuilder()
       .setCustomId(JSON.stringify({ cmd: 'join_voice', vc: voiceChannel?.id || null }))
       .setLabel('🔊 Tham gia Voice')
