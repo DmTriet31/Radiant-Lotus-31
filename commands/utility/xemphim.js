@@ -42,7 +42,6 @@ module.exports = {
       })
       .addFields(
         { name: 'Phòng voice', value: roomName, inline: true },
-        { name: 'Slot', value: '2/Không giới hạn', inline: true },
         { name: 'Thể loại phim', value: genre, inline: true }
       )
       .setFooter({ text: 'Sử dụng: /xemphim genre: [thể loại] msg: [nội dung tuyển]' });
