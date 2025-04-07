@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 // Mảng các hoạt động
-const randomactivity = [
+const Activity = [
     "Chơi game 🎮",
     "Đá banh ⚽",
     "Xem phim 🎬",
