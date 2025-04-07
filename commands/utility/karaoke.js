@@ -24,32 +24,29 @@ module.exports = {
       option.setName('song')
         .setDescription('Tên bài hát')
         .setRequired(true)
-    )
-    .addStringOption(option =>
-      option.setName('singer')
-        .setDescription('Tên ca sĩ (người dùng sẽ là ca sĩ)')
-        .setRequired(true)
     ),
   
   async execute(interaction) {
     const genre = interaction.options.getString('genre');
     const song = interaction.options.getString('song');
-    const singer = interaction.options.getString('singer');
     const member = interaction.member;
     const voiceChannel = member.voice?.channel;
     const roomName = voiceChannel ? voiceChannel.name : '❌ Không ở trong voice channel';
+
+    // Tự động tag người dùng đang thực hiện lệnh (người dùng là ca sĩ)
+    const singerTag = interaction.user;
 
     // Thông tin bài hát và ca sĩ
     const embed = new EmbedBuilder()
       .setColor(0x1E90FF)
       .setAuthor({ name: `${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
       .setTitle(`🎤 **Ca Sĩ Đang Đợi**`)
-      .setDescription(`**Bài hát**: ${song}\n**Thể loại**: ${genre}\n**Ca sĩ**: ${singer}`)
+      .setDescription(`**Bài hát**: ${song}\n**Thể loại**: ${genre}\n**Ca sĩ**: <@${singerTag.id}>`)
       .addFields(
         { name: 'Phòng voice', value: roomName, inline: true },
         { name: 'Số ca sĩ đang chờ', value: '1/Không giới hạn', inline: true }
       )
-      .setFooter({ text: 'Sử dụng: /karaoke genre: [thể loại] song: [tên bài hát] singer: [tên ca sĩ]' });
+      .setFooter({ text: 'Sử dụng: /karaoke genre: [thể loại] song: [tên bài hát]' });
 
     // Nút tham gia voice channel
     const joinButton = new ButtonBuilder()
