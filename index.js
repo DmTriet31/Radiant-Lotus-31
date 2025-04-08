@@ -148,7 +148,29 @@ client.on('interactionCreate', async interaction => {
     }
   }
 });
+const { Client, Intents } = require('discord.js');
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const { token } = require('./config.json'); // Hoặc từ .env
 
+client.on('ready', () => {
+    console.log(`Đã đăng nhập dưới tên: ${client.user.tag}`);
+});
+
+// Lắng nghe các interaction (nút bấm)
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isButton()) return;
+
+    // Xử lý các nút bấm
+    if (interaction.customId === 'buy_spotify') {
+        await interaction.reply('Cảm ơn bạn đã chọn mua **Spotify Premium**! Vui lòng thanh toán qua Momo hoặc ngân hàng và cung cấp thông tin qua DM.');
+    } else if (interaction.customId === 'buy_netflix') {
+        await interaction.reply('Cảm ơn bạn đã chọn mua **Netflix Share**! Vui lòng thanh toán qua Momo hoặc ngân hàng và cung cấp thông tin qua DM.');
+    } else if (interaction.customId === 'buy_ao') {
+        await interaction.reply('Cảm ơn bạn đã chọn mua **Áo Thun**! Vui lòng thanh toán qua Momo hoặc ngân hàng và cung cấp thông tin qua DM.');
+    }
+});
+
+client.login(token);
 };
 
 loadEventHandlers();
