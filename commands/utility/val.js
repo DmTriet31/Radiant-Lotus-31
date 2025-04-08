@@ -38,6 +38,7 @@ module.exports = {
     let roomName = '❌ Không ở trong voice channel';
     let slot = '0/0';
     let row = null;
+    let invite = null;
 
     const embed = new EmbedBuilder()
       .setColor(0xAA00FF)
@@ -53,13 +54,18 @@ module.exports = {
       slot = `${memberCount}/${userLimit === 0 ? 'Unlimited' : userLimit}`;
       roomName = voiceChannel.name;
 
-      const vcLink = `https://discord.com/channels/${interaction.guild.id}/${voiceChannel.id}`;
-      embed.addFields({ name: 'Voice Channel', value: `[Mở kênh voice tại đây](${vcLink})`, inline: false });
+      // Tạo invite tạm thời
+      invite = await voiceChannel.createInvite({
+        maxAge: 300, // Invite hết hạn sau 5 phút
+        maxUses: 1,  // Chỉ có thể sử dụng 1 lần
+        temporary: true // Người dùng sẽ bị kick ra nếu không có role khi rời server
+      });
 
+      const vcLink = `https://discord.com/channels/${interaction.guild.id}/${voiceChannel.id}`;
       const joinButton = new ButtonBuilder()
         .setLabel('Mở kênh voice')
         .setStyle(ButtonStyle.Link)
-        .setURL(vcLink);
+        .setURL(invite.url); // Link invite
 
       row = new ActionRowBuilder().addComponents(joinButton);
     }
@@ -74,6 +80,17 @@ module.exports = {
       content: `${interaction.user} ${msg}`,
       embeds: [embed],
       components: row ? [row] : []
+    });
+
+    // Lắng nghe sự kiện rời voice channel
+    const filter = (oldState, newState) => newState.member.id === interaction.user.id && oldState.channelId === voiceChannel.id && !newState.channelId;
+    const collector = voiceChannel.createDisconnectCollector({ filter, time: 60000 }); // Collect trong 1 phút
+
+    collector.on('collect', async () => {
+      if (invite) {
+        await invite.delete(); // Hủy link invite khi người dùng rời voice channel
+        console.log(`Invite đã bị hủy vì người dùng đã rời voice channel.`);
+      }
     });
   }
 };
