@@ -37,6 +37,7 @@ module.exports = {
     // Xử lý tên phòng và slot
     let roomName = '❌ Không ở trong voice channel';
     let slot = '0/0';
+    let row = null;
 
     const embed = new EmbedBuilder()
       .setColor(0xAA00FF)
@@ -53,7 +54,14 @@ module.exports = {
       roomName = voiceChannel.name;
 
       const vcLink = `https://discord.com/channels/${interaction.guild.id}/${voiceChannel.id}`;
-      embed.addFields({ name: 'Voice Channel', value: `[Join VC](${vcLink})`, inline: false });
+      embed.addFields({ name: 'Voice Channel', value: `[Mở kênh voice tại đây](${vcLink})`, inline: false });
+
+      const joinButton = new ButtonBuilder()
+        .setLabel('Mở kênh voice')
+        .setStyle(ButtonStyle.Link)
+        .setURL(vcLink);
+
+      row = new ActionRowBuilder().addComponents(joinButton);
     }
 
     embed.addFields(
@@ -62,18 +70,10 @@ module.exports = {
       { name: 'Rank', value: rank.toUpperCase(), inline: true }
     );
 
-    const joinButton = new ButtonBuilder()
-      .setCustomId(JSON.stringify({ cmd: 'join_voice', vc: voiceChannel?.id || null }))
-      .setLabel('Mở kênh voice')
-      .setStyle(ButtonStyle.Primary)
-      .setDisabled(!voiceChannel);
-
-    const row = new ActionRowBuilder().addComponents(joinButton);
-
     await interaction.reply({
       content: `${interaction.user} ${msg}`,
       embeds: [embed],
-      components: [row]
+      components: row ? [row] : []
     });
   }
 };
