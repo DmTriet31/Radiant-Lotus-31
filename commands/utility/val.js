@@ -71,9 +71,9 @@ module.exports = {
     }
 
     embed.addFields(
-      { name: 'Room', value: roomName, inline: true },
-      { name: 'Slot', value: slot, inline: true },
-      { name: 'Rank', value: rank.toUpperCase(), inline: true }
+      { name: '> [Room]', value: roomName, inline: true },
+      { name: '> [Slot]', value: slot, inline: true },
+      { name: '> [Rank]', value: rank.toUpperCase(), inline: true }
     );
 
     await interaction.reply({
