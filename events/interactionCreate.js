@@ -60,7 +60,29 @@ module.exports = {
         }
     },
 };
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isButton()) return;
 
+    // Lấy kênh admin (thay đổi tên kênh theo yêu cầu của bạn)
+    const adminChannel = interaction.guild.channels.cache.find(ch => ch.name === 'admin-notifications');
+
+    if (interaction.customId === 'buy_spotify') {
+        await interaction.reply('Cảm ơn bạn đã chọn mua **Spotify Premium**! Vui lòng thanh toán qua Momo hoặc ngân hàng và cung cấp thông tin qua DM.');
+        if (adminChannel) {
+            await adminChannel.send(`Khách hàng **${interaction.user.tag}** đã mua **Spotify Premium**.`);
+        }
+    } else if (interaction.customId === 'buy_netflix') {
+        await interaction.reply('Cảm ơn bạn đã chọn mua **Netflix Share**! Vui lòng thanh toán qua Momo hoặc ngân hàng và cung cấp thông tin qua DM.');
+        if (adminChannel) {
+            await adminChannel.send(`Khách hàng **${interaction.user.tag}** đã mua **Netflix Share**.`);
+        }
+    } else if (interaction.customId === 'buy_ao') {
+        await interaction.reply('Cảm ơn bạn đã chọn mua **Áo Thun**! Vui lòng thanh toán qua Momo hoặc ngân hàng và cung cấp thông tin qua DM.');
+        if (adminChannel) {
+            await adminChannel.send(`Khách hàng **${interaction.user.tag}** đã mua **Áo Thun**.`);
+        }
+    }
+});
 
 const commandsPath = path.join(__dirname, '../commands');
 const commandFiles = fs.readdirSync(commandsPath).reduce((files, folder) => {
