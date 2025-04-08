@@ -63,7 +63,7 @@ module.exports = {
 
       const vcLink = `https://discord.com/channels/${interaction.guild.id}/${voiceChannel.id}`;
       const joinButton = new ButtonBuilder()
-        .setLabel('Mở kênh voice')
+        .setLabel(`🔊 Tham gia: ${voiceChannel.name}`)  // Tên kênh voice được thêm vào nút
         .setStyle(ButtonStyle.Link)
         .setURL(invite.url); // Link invite
 
