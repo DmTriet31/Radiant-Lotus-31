@@ -34,6 +34,7 @@ module.exports = {
     const member = interaction.member;
     const voiceChannel = member.voice?.channel;
 
+    // Xử lý tên phòng và slot
     let roomName = '❌ Không ở trong voice channel';
     let slot = '0/0';
     let row = null;
@@ -55,31 +56,25 @@ module.exports = {
 
       // Tạo invite tạm thời
       invite = await voiceChannel.createInvite({
-        maxAge: 300, // Hết hạn sau 5 phút
-        maxUses: 1,  // Dùng 1 lần
-        temporary: true
+        maxAge: 300, // Invite hết hạn sau 5 phút
+        maxUses: 1,  // Chỉ có thể sử dụng 1 lần
+        temporary: true // Người dùng sẽ bị kick ra nếu không có role khi rời server
       });
 
+      const vcLink = `https://discord.com/channels/${interaction.guild.id}/${voiceChannel.id}`;
       const joinButton = new ButtonBuilder()
-        .setLabel(`🔊 Tham gia: ${voiceChannel.name}`)
+        .setLabel(`🔊 Tham gia: ${voiceChannel.name}`)  // Tên kênh voice được thêm vào nút
         .setStyle(ButtonStyle.Link)
-        .setURL(invite.url);
+        .setURL(invite.url); // Link invite
 
       row = new ActionRowBuilder().addComponents(joinButton);
     }
 
-    // Thêm các field vào embed với format mới
     embed.addFields(
-      { name: '\u200B', value: `> [Room] ${roomName}` },
-      { name: '\u200B', value: `> [Slot] ${slot}` },
-      { name: '\u200B', value: `> [Rank] ${rank.toUpperCase()}` }
+      { name: '> [Room]', value: roomName, inline: true },
+      { name: '> [Slot]', value: slot, inline: true },
+      { name: '> [Rank]', value: rank.toUpperCase(), inline: true }
     );
-
-    if (voiceChannel) {
-      embed.addFields(
-        { name: '\u200B', value: `> [Voicechat] ${voiceChannel.name}` }
-      );
-    }
 
     await interaction.reply({
       content: `${interaction.user} ${msg}`,
@@ -87,20 +82,14 @@ module.exports = {
       components: row ? [row] : []
     });
 
-    // Hủy invite khi người dùng rời voice
-    const filter = (oldState, newState) =>
-      newState.member.id === interaction.user.id &&
-      oldState.channelId === voiceChannel?.id &&
-      !newState.channelId;
+    // Lắng nghe sự kiện rời voice channel
+    const filter = (oldState, newState) => newState.member.id === interaction.user.id && oldState.channelId === voiceChannel.id && !newState.channelId;
+    const collector = voiceChannel.createDisconnectCollector({ filter, time: 60000 }); // Collect trong 1 phút
 
-    interaction.client.on('voiceStateUpdate', async (oldState, newState) => {
-      if (filter(oldState, newState) && invite) {
-        try {
-          await invite.delete();
-          console.log('Đã hủy invite vì người dùng rời kênh voice.');
-        } catch (e) {
-          console.error('Lỗi khi xóa invite:', e);
-        }
+    collector.on('collect', async () => {
+      if (invite) {
+        await invite.delete(); // Hủy link invite khi người dùng rời voice channel
+        console.log(`Invite đã bị hủy vì người dùng đã rời voice channel.`);
       }
     });
   }
