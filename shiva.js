@@ -1,11 +1,3 @@
-const { handleSmartAI } = require('./smartAI');
-client.on('messageCreate', async (message) => {
-  if (message.author.bot) return;
-
-  const reply = await handleSmartAI(message.content);
-  message.reply(reply);
-});
-
 const axios = require('axios');
 const dotenv = require('dotenv');
 const colors = require('./UI/colors/colors');
