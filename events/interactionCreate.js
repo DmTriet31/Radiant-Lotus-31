@@ -28,11 +28,7 @@ module.exports = {
                         await interaction.reply({ content: lang.error, ephemeral: true });
                     } catch (replyError) {
                         console.error('Error replying to failed command:', replyError);
-                    }
-                }
-            }
-        } 
-        
+     
         else if (interaction.isButton()) {
             const adminChannel = interaction.guild.channels.cache.find(ch => ch.name === 'admin-notifications');
 
