@@ -1,3 +1,4 @@
+const { handleSmartAI } = require('./smartAI');
 const axios = require('axios');
 const dotenv = require('dotenv');
 const colors = require('./UI/colors/colors');
