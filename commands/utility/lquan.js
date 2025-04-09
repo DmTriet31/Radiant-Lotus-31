@@ -34,16 +34,10 @@ module.exports = {
     const member = interaction.member;
     const voiceChannel = member.voice?.channel;
 
-    // Xử lý phòng và slot
     let roomName = '❌ Không ở trong voice channel';
     let slot = '0/0';
-
-    if (voiceChannel) {
-      const memberCount = voiceChannel.members.size;
-      const userLimit = voiceChannel.userLimit;
-      slot = `${memberCount}/${userLimit === 0 ? 'Unlimited' : userLimit}`;
-      roomName = voiceChannel.name;
-    }
+    let row = null;
+    let invite = null;
 
     const embed = new EmbedBuilder()
       .setColor(0x00AAFF)
@@ -51,25 +45,54 @@ module.exports = {
         name: `${interaction.user.username}`,
         iconURL: interaction.user.displayAvatarURL()
       })
-      .addFields(
-        { name: 'Phòng', value: roomName, inline: true },
-        { name: 'Slot', value: slot, inline: true },
-        { name: 'Rank', value: rank.toUpperCase(), inline: true }
-      )
       .setFooter({ text: 'Cách sử dụng: /lquan rank: [rank] msg: [msg]' });
 
-    const joinButton = new ButtonBuilder()
-      .setCustomId(JSON.stringify({ cmd: 'join_voice', vc: voiceChannel?.id || null }))
-      .setLabel('🔊 Tham gia voice')
-      .setStyle(ButtonStyle.Primary)
-      .setDisabled(!voiceChannel);
+    if (voiceChannel) {
+      const memberCount = voiceChannel.members.size;
+      const userLimit = voiceChannel.userLimit;
+      slot = `${memberCount}/${userLimit === 0 ? 'Không giới hạn' : userLimit}`;
+      roomName = voiceChannel.name;
 
-    const row = new ActionRowBuilder().addComponents(joinButton);
+      // Tạo invite tạm thời
+      invite = await voiceChannel.createInvite({
+        maxAge: 300, // 5 phút
+        maxUses: 1,
+        temporary: true
+      });
+
+      const joinButton = new ButtonBuilder()
+        .setLabel(`🔊 Tham gia: ${voiceChannel.name}`)
+        .setStyle(ButtonStyle.Link)
+        .setURL(invite.url);
+
+      row = new ActionRowBuilder().addComponents(joinButton);
+    }
+
+    embed.addFields(
+      { name: 'Phòng', value: roomName, inline: true },
+      { name: 'Slot', value: slot, inline: true },
+      { name: 'Rank', value: rank.toUpperCase(), inline: true }
+    );
 
     await interaction.reply({
       content: `${interaction.user} ${msg}`,
       embeds: [embed],
-      components: [row]
+      components: row ? [row] : []
     });
+
+    // Tự xóa invite nếu user rời voice
+    if (voiceChannel && invite) {
+      const filter = (oldState, newState) =>
+        newState.member.id === interaction.user.id &&
+        oldState.channelId === voiceChannel.id &&
+        !newState.channelId;
+
+      const collector = voiceChannel.createDisconnectCollector({ filter, time: 60000 });
+
+      collector.on('collect', async () => {
+        await invite.delete().catch(() => {});
+        console.log(`Đã xóa invite vì người dùng rời khỏi voice channel.`);
+      });
+    }
   }
 };
