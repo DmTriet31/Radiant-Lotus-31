@@ -1,91 +1,59 @@
+<!-- Background animated -->
 ![Animated Background](https://cdn.discordapp.com/attachments/1316896145393586227/1357330377693331566/standard.gif?ex=67efcfec&is=67ee7e6c&hm=fb05e526452ed3144bf0f1f48ef58240ca81f680b48bdf9528babbe2345ac4a2&)
 
-<h1 align="center" style="font-family: Arial, sans-serif; color: #FF6F61; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-  ALL IN ONE BOT 1.2.1
+<!-- Logo animated -->
+<p align="center">
+  <img src="https://cdn.discordapp.com/attachments/1316896145393586227/1357331068688011365/standard_1.gif?ex=67efd090&is=67ee7f10&hm=4250dfedab995219647a7ff3509637d1ed2c9b841abf21b54cf2d87544c2c901&" width="250" alt="Bot Logo" />
+</p>
+
+<h1 align="center">
+  🚀Radiant Lotus 1.2.1
 </h1>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square&logo=opensource"
-      alt="License: MIT" />
+    <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square&logo=opensource" alt="License: MIT" />
   </a>
-
-  <a href="https://www.paypal.me/@GlaceYT">
-    <img src="https://img.shields.io/badge/Donate-PayPal-0079C1?style=flat-square&logo=paypal"
-      alt="Donate" />
+  <a href="https://paypal.me/DmTriet">
+    <img src="https://img.shields.io/badge/Donate-PayPal-0079C1?style=flat-square&logo=paypal" alt="Donate" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://www.youtube.com/channel/@GlaceYT">
-    <img src="https://img.shields.io/badge/YouTube-Subscribe-red?style=flat-square&logo=youtube"
-      alt="YouTube" />
+  <a href="https://www.youtube.com/@DmTriet.31">
+    <img src="https://img.shields.io/badge/YouTube-Subscribe-red?style=flat-square&logo=youtube" alt="YouTube" />
   </a>
-
-  <a href="https://discord.gg/xQF9f9yUEM">
-    <img src="https://img.shields.io/badge/Discord-Join-blue?style=flat-square&logo=discord"
-      alt="Join Discord" />
+  <a href="https://discord.gg/A8FY8VD2xn">
+    <img src="https://img.shields.io/badge/Discord-Join-blue?style=flat-square&logo=discord" alt="Join Discord" />
   </a>
-
-  <a href="https://www.instagram.com/glaceytt">
-    <img src="https://img.shields.io/badge/Instagram-Follow-E4405F?style=flat-square&logo=instagram"
-      alt="Instagram" />
+  <a href="https://www.instagram.com/dmtriet_/">
+    <img src="https://img.shields.io/badge/Instagram-Follow-E4405F?style=flat-square&logo=instagram" alt="Instagram" />
   </a>
-
-  <a href="https://www.facebook.com/youulewd/">
-    <img src="https://img.shields.io/badge/Facebook-Follow-1877F2?style=flat-square&logo=facebook"
-      alt="Facebook" />
+  <a href="https://www.facebook.com/DmTriet.06">
+    <img src="https://img.shields.io/badge/Facebook-Follow-1877F2?style=flat-square&logo=facebook" alt="Facebook" />
   </a>
 </p>
 
+---
 
+## 📦 Installation Guide
 
-# Discord All-in-One BOT Installation Guide
+### ✅ Step 1: Configure `config.json`
 
-## How to Install
+- Mở file `config.json`.
+- Thêm MongoDB URL của bạn vào.
 
-### Step 1: Update `config.json`
+---
 
-1. Open the `config.json` and add your mongodb url.
+### ✅ Step 2: Deploy Bot
 
-### Step 2: Set Up Hosting Service
+- Chọn dịch vụ host như [Render](https://render.com/).
+- Dán URL GitHub của bạn vào phần Build & Deploy.
 
-1. Go to your preferred hosting service. For this guide, we use [Render](https://render.com/).
-2. In the Build & Deploy section, paste your repository URL.
+---
 
+### ✅ Step 3: Cài Đặt và Chạy Bot
 
-### Step 3: Add Build and Start Commands
- Run the following commands to install dependencies and start your bot:
-
-   npm install, 
-   node index.js
-
-### Step 4: Get Your Bot Token
-Navigate to the Discord Developer Portal.
-Find your application, and retrieve the bot token from the "Bot" section.
-
-### Step 5: Set Environment Variable
-Create an environment variable with the following details:
-Key: TOKEN
-Value: [your bot token]
-Deploy your application using your hosting service’s deployment process.
-
-### Step 6: Wait and Test
-Wait approximately five minutes for your bot to deploy and start up.
-
-Test your bot by sending commands to ensure it is operational.
-
-🎉 Congratulations! Your bot is now up and running. 🥳
-
-### Additional Resources
-Video Tutorial: If you prefer a video guide, watch this YouTube tutorial [ Soon ].
-
-Common Errors: Consult the errors section for troubleshooting.
-
-### Useful Files
-
-events/ready.js: Bot status configuration.
-
-UI/banners/musicard.js: Change, add, or remove music cards here.
-
-UI/icons/musicicons.js: Change, add, or remove music icons here.
+```bash
+npm install
+node index.js
