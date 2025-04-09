@@ -73,7 +73,7 @@ Kiểm tra bot bằng cách gửi lệnh trong Discord.
 🔧 Useful Files
 File                      Mô Tả
 events/ready.js	          Cấu hình trạng thái bot
-UI/banners/musicard.js   Tùy chỉnh thẻ nhạc
+UI/banners/musicard.js    Tùy chỉnh thẻ nhạc
 UI/icons/musicicons.js	  Tùy chỉnh icon nhạc
 ```
 ❗ Troubleshooting
