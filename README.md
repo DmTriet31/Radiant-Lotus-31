@@ -55,6 +55,8 @@
 npm install
 node index.js
 
+---
+
 ### ✅ Step 4: Lấy Token Bot
 Truy cập Discord Developer Portal
 Vào ứng dụng bạn đã tạo → Tab "Bot" → Copy token.
