@@ -53,9 +53,7 @@
 
 ```bash
 npm install
-node index.js
-
----
+node index.js ```
 
 ### ✅ Step 4: Lấy Token Bot
 Truy cập Discord Developer Portal
