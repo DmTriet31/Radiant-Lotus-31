@@ -69,12 +69,12 @@ Tạo biến môi trường: Key: TOKEN
 ### ✅ Step 6: Khởi động và kiểm tra bot
 Đợi khoảng 5 phút để bot hoạt động.
 Kiểm tra bot bằng cách gửi lệnh trong Discord.
-
+```bash
 🔧 Useful Files
 File                      Mô Tả
 events/ready.js	          Cấu hình trạng thái bot
 UI/banners/musicard.js   	Tùy chỉnh thẻ nhạc
 UI/icons/musicicons.js	  Tùy chỉnh icon nhạc
-
+```
 ❗ Troubleshooting
 Xem phần "Common Errors" để khắc phục lỗi thường gặp.
