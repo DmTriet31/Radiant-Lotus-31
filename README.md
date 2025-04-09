@@ -7,13 +7,10 @@
 </p>
 
 <h1 align="center">
-  🚀Radiant Lotus 1.2.1
+  🚀 Radiant Lotus
 </h1>
 
 <p align="center">
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square&logo=opensource" alt="License: MIT" />
-  </a>
   <a href="https://paypal.me/DmTriet">
     <img src="https://img.shields.io/badge/Donate-PayPal-0079C1?style=flat-square&logo=paypal" alt="Donate" />
   </a>
@@ -57,3 +54,24 @@
 ```bash
 npm install
 node index.js
+
+### ✅ Step 4: Lấy Token Bot
+Truy cập Discord Developer Portal
+Vào ứng dụng bạn đã tạo → Tab "Bot" → Copy token.
+
+### ✅ Step 5: Thiết Lập Biến Môi Trường
+Tạo biến môi trường: Key: TOKEN
+                     Value: [Your Bot Token]
+
+### ✅ Step 6: Khởi động và kiểm tra bot
+Đợi khoảng 5 phút để bot hoạt động.
+Kiểm tra bot bằng cách gửi lệnh trong Discord.
+
+🔧 Useful Files
+File                      Mô Tả
+events/ready.js	          Cấu hình trạng thái bot
+UI/banners/musicard.js   	Tùy chỉnh thẻ nhạc
+UI/icons/musicicons.js	  Tùy chỉnh icon nhạc
+
+❗ Troubleshooting
+Xem phần "Common Errors" để khắc phục lỗi thường gặp.
