@@ -29,6 +29,7 @@
         "setups": true
     },
      "lavalink": {
+        "lavalink": {
         "identifier": "Unknownz",
         "password": "unknownz",
         "host": "de1.bot-hosting.net",
