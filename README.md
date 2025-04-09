@@ -59,7 +59,7 @@ node index.js
 ```
 
 ### ✅ Step 4: Lấy Token Bot
-Truy cập Discord Developer Portal
+Truy cập [Discord Developer Portal](https://discord.com/developers/applications)
 Vào ứng dụng bạn đã tạo → Tab "Bot" → Copy token.
 
 ### ✅ Step 5: Thiết Lập Biến Môi Trường
